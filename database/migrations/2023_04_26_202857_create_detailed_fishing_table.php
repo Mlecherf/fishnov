@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateManagerTable extends Migration
+class CreateDetailedFishingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateManagerTable extends Migration
      */
     public function up()
     {
-        Schema::create('manager', function (Blueprint $table) {
-            $table->id('id_manager');
-            $table->foreignId('id_company');
-            $table->string('name_manager');
-            $table->string('password_manager');
+        Schema::create('detailed_fishing', function (Blueprint $table) {
+            $table->id('id_detailed_fishing');
+            $table->foreignId('id_fishing');
+            $table->string('type_fish');
+            $table->integer('quantity');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateManagerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('manager');
+        Schema::dropIfExists('detailed_fishing');
     }
 }
