@@ -1,30 +1,57 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Fishings') }}
+            {{ __('Companies') }}
         </h2>
+        @if ($user->is_admin)
+            <a class="font-semibold  text-gray-800 leading-tight" href="/">
+                {{ __('➕ Add a company') }}
+            </a>
+        @endif
     </x-slot>
-
+    
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200 md:items-center">  
-                    <table id="fish_table">
+                <div class="p-6 bg-white border-b border-gray-200 md:items-center"> 
+                    <table id="company_table">
                         <tr>
                             <th onclick="sortTable(0)">ID</th>
-                            <th onclick="sortTable(1)">Type</th>
+                            <th onclick="sortTable(1)">Company</th>
+                            <th onclick="sortTable(2)">Admin</th>
+                            @if ($user->is_admin)
+                                <th onclick="sortTable(3)">Actions</th>
+                            @endif
                         </tr>
-                        @foreach ($allDetails as $detail)
-                            <tr>
+                        @foreach ($allCompanies as $company)
+                        <tr>
+                            <td>
+                                {{$company->id_company}}
+                            </td>
+                            <td>
+                                {{$company->name_company}}
+                            </td> 
+                            <td>
+                                {{$company->name_admin_company}}
+                            </td>
+                            @if ($user->is_admin)
                                 <td>
-                                    {{$detail->quantity}}
+                                    <form method="post" action="{{ route('companies.action', $company->id_company  ) }}">
+                                        @csrf
+                                        <select onchange="this.form.submit()" onfocus="this.selectedIndex = -1;">
+                                            <option name="delete" id="delete" value="delete">
+                                                {{ __('➖ Delete') }}
+                                            </option>
+                                            <option name="modify" id="modify" value="edit">
+                                                {{ __('⚙️ Modifier') }}
+                                            </option>
+                                        </select>
+                                    </form>
                                 </td>
-                                <td>
-                                    {{$detail->type_fish}}
-                                </td>
-                            </tr>
+                            @endif
+                        </tr>
                         @endforeach
-                    </table>              
+                    </table>
                 </div>
             </div>
         </div>
@@ -34,7 +61,7 @@
 <script>
     function sortTable(n) {
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-      table = document.getElementById("fish_table");
+      table = document.getElementById("company_table");
       switching = true;
       // Set the sorting direction to ascending:
       dir = "asc";
@@ -86,4 +113,4 @@
         }
       }
     }
-    </script>
+</script>
