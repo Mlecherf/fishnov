@@ -16,7 +16,7 @@ class CreateFishingTable extends Migration
         Schema::create('fishing', function (Blueprint $table) {
             $table->id('id_fishing');
             $table->date('date');
-            $table->foreignId('id_trawler');
+            $table->foreignId('id_user');
             $table->timestamps();
         });
     }
