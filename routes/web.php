@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CompagniesController;
+use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\FishingController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +29,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/fishings', [FishingController::class, 'index'])
         ->name('fishing.index');
+
+    Route::get('/companies', [CompaniesController::class, 'index'])
+        ->name('companies.index');
+
+    Route::post('/companies/{id}', [CompaniesController::class, 'action'])
+        ->name('companies.action');
 });
 
 
