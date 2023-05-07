@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\CompagniesController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\FishingController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +36,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/companies/{id}', [CompaniesController::class, 'action'])
         ->name('companies.action');
 });
-
 
 require __DIR__.'/auth.php';
