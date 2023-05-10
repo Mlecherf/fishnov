@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\DetailedFishing;
 use App\Models\Fishing;
-use DateTime;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class FishingController extends Controller
 {
@@ -25,17 +23,4 @@ class FishingController extends Controller
         return view('fishing.index', compact('allDetails'));
     }
 
-    public function get_all_fishing_dates(Request $request)
-    {
-        #$user = Auth::user();
-        #$allDate = Fishing::where('id_user', $user->id)
-        #                    ->value('date');
-
-        #return response()->json($allDate);
-
-        
-
-        $allDate = Fishing::get('date');
-        return response()->json($allDate);
-    }
 }

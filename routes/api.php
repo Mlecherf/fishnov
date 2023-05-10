@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FishingController;
-
+use App\Http\Controllers\API\FishingController;
+use App\Http\Controllers\API\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +17,8 @@ use App\Http\Controllers\FishingController;
 */
 
 
-
-#Route::middleware('auth:sanctum')->get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates']);
+Route::get('/login', [AuthController::class, 'formLogin']);
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -28,18 +28,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates']);
 });
 
-#Route::middleware('auth:sanctum')->get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates'])->name('fishings.date');
-
-#Route::get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates'])
-#        ->name('fishings.date')->middleware('auth');
-
-#Route::get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates'])->name('fishings.date');
-
-#Route::group(['middleware' => ['api']], function () {
-#    Route::middleware('auth:sanctum')->get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates'])->name('fishings.date');
-#});
-
-#Route::middleware('auth:sanctum')->group(function () {
-#    Route::get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates'])->name('fishings.date');
-#});
 
