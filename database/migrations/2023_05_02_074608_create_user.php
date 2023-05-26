@@ -23,6 +23,7 @@ class CreateUser extends Migration
             $table->foreignId('id_company')->nullable();
             $table->string('type');
             $table->string('registration_trawler')->nullable();
+            $table->boolean('is_admin')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
