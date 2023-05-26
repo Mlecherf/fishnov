@@ -16,8 +16,7 @@ class CreateCompanyTable extends Migration
         Schema::create('company', function (Blueprint $table) {
             $table->id('id_company');
             $table->string('name_company');
-            $table->string('name_admin_company');
-            $table->string('password_admin_company');
+            $table->foreignId('id_admin_company');
             $table->timestamps();
         });
     }
