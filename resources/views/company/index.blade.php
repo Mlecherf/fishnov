@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Companies') }}
+            {{ __('Company') }}
         </h2>
         @if ($user->is_admin)
             <a class="font-semibold  text-gray-800 leading-tight" href="/">
@@ -36,7 +36,7 @@
                             </td>
                             @if ($user->is_admin)
                                 <td>
-                                    <form method="post" action="{{ route('companies.action', $company->id_company  ) }}">
+                                    <form method="post" action="{{ route('company.action', $company->id_company  ) }}">
                                         @csrf
                                         <select onchange="this.form.submit()" onfocus="this.selectedIndex = -1;">
                                             <option name="delete" id="delete" value="delete">

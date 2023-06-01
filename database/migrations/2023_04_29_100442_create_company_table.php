@@ -17,6 +17,7 @@ class CreateCompanyTable extends Migration
             $table->id('id_company');
             $table->string('name_company');
             $table->foreignId('id_admin_company');
+            $table->string('token_company');
             $table->timestamps();
         });
     }

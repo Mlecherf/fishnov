@@ -31,6 +31,31 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
 
+        $credentials = $request->only('email', 'password');
+    
+        if (Auth::attempt($credentials)) {
+            // L'authentification a réussi
+            $user = Auth::user();
+    
+            // Générer un jeton d'accès pour l'utilisateur
+            #$token = $user->createToken('auth_token')->plainTextToken;
+    
+            // Supprimer les jetons précédents de l'utilisateur
+            $user->tokens->delete();
+    
+            // Effectuer d'autres actions si nécessaire
+    
+            // Redirection ou autre traitement
+            return redirect()->intended(RouteServiceProvider::HOME);
+    
+        } else {
+            // L'authentification a échoué
+            dd('Identifiants invalides');
+        }
+        
+
+        
+        /*
         dd('test');
         $user = User::where('email', $request->email)->first();
 
@@ -40,7 +65,7 @@ class AuthenticatedSessionController extends Controller
             dd('yes');
         }
 
-        /*
+        
         dd($request->authenticate());
 
         $request->session()->regenerate();
@@ -53,10 +78,11 @@ class AuthenticatedSessionController extends Controller
             'access_token' => $token,
             'token_type' => 'Bearer',
         ]);
-        */
-        //dd($request->session());
+        
+        dd($request->session());
 
-        //return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(RouteServiceProvider::HOME);
+        */
     }
 
     /**
