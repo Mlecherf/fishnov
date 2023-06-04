@@ -28,7 +28,8 @@
                                     <a type="button" style="background-color: #DBDEE2">Join</a>
                                 </div>                              
                             @else
-                                <tr>{{$company->name_company}}</tr>
+                                <tr>{{$company->name_company}}</tr><br>
+                                <tr>{{$company->token_company}}</tr>
                             @endif
                             
                         </tr>                        
