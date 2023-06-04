@@ -1,38 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Company') }}
+          {{ __('Company') }}
         </h2>
     </x-slot>
-    
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200 md:items-center"> 
-                    <table id="company_table">
-                        <tr>
-                            <th onclick="sortTable(0)">ID</th>
-                            <th onclick="sortTable(1)">Company</th>
-                            <th onclick="sortTable(2)">Admin</th>
-                            @if ($user->is_admin)
-                                <th onclick="sortTable(3)">Actions</th>
-                            @endif
-                        </tr>
-                        <tr>
-                            @if($user->id_company === Null)
-                                <div>
-                                    <a type="button" style="background-color: #DBDEE2" href="{{ route('company.create') }}">Create</a>
-                                </div>
-                                
-                                <div>
-                                    <a type="button" style="background-color: #DBDEE2">Join</a>
-                                </div>                              
-                            @else
-                                <tr>{{$company->name_company}}</tr>
-                            @endif
-                            
-                        </tr>                        
-                    </table>
+                <div class="p-6 bg-white border-b border-gray-200 md:items-center">  
+                  <form method="POST" action={{ route('company.add') }}>
+                    @csrf
+                    <div>
+                        <label for="name_company">
+                            {{ __('Company Name') }}
+                        </label>
+                        <input id="name_company" type="text" name="name_company" value="{{ old('name_company') }}" required autofocus>
+                    </div>   
+                    <div>
+                        <button type="submit">
+                            {{ __('Create') }}
+                        </button>
+                    </div>
+                </form>
                 </div>
             </div>
         </div>
@@ -42,7 +32,7 @@
 <script>
     function sortTable(n) {
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-      table = document.getElementById("company_table");
+      table = document.getElementById("fish_table");
       switching = true;
       // Set the sorting direction to ascending:
       dir = "asc";
@@ -94,4 +84,4 @@
         }
       }
     }
-</script>
+    </script>

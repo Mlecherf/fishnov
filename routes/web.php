@@ -33,9 +33,11 @@ Route::middleware('auth')->group(function () {
     # COMPANY
     Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
 
-    Route::post('/company/{id}', [CompanyController::class, 'action']);
+    #Route::post('/company/{id}', [CompanyController::class, 'action']);
 
-    Route::post('/company/add  ', [CompanyController::class, 'create_company']);
+    Route::get('/company/create', [CompanyController::class, 'create_company'])->name('company.create');
+
+    Route::post('/company/add', [CompanyController::class, 'add_company'])->name('company.add');
 });
 
 
