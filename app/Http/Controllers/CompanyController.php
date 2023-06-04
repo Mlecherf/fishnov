@@ -96,6 +96,8 @@ class CompanyController extends Controller
 
             $user->id_company = $id_company;
             $user->save();
+        } else {
+            return redirect()->route('company.join.get')->withErrors(['message' => 'Wrong token']);
         };
 
         return redirect('/dashboard');
