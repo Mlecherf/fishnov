@@ -40,14 +40,14 @@ class CompanyController extends Controller
         $user = Auth::user();
     }
 
-    public function create_company () {
+    public function get_create_company () {
 
         $user = Auth::user();
 
         return view('company.create', compact('user'));
     }
 
-    public function add_company (Request $request) {
+    public function post_create_company (Request $request) {
         $request->validate([
             'name_company' => ['required', 'string', 'max:255']
         ]);
@@ -72,6 +72,34 @@ class CompanyController extends Controller
         });
             
         return redirect('/dashboard')->with('new company', 'Company enregistrée !');
+    }
+
+    public function get_join_company () {
+
+        return view('company.join');
+    }
+
+    public function post_join_company (Request $request) {
+
+        $request->validate([
+            'token_company' => ['required', 'string']
+        ]);
+
+        $user = Auth::user();
+        $token = $request->token_company;
+
+        if (Company::where('token_company', $token)->exists()) {
+
+            $id_company = Company::select('id_company')
+                                 ->where('token_company', $token)
+                                 ->get()[0]['id_company'];
+
+            $user->id_company = $id_company;
+            $user->save();
+        };
+
+        return redirect('/dashboard');
+
     }
     
 }

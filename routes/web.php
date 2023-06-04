@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\FishingController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -34,10 +33,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
 
     #Route::post('/company/{id}', [CompanyController::class, 'action']);
+    
+    # création company
+    Route::get('/company/create', [CompanyController::class, 'get_create_company'])->name('company.create.get');
+    Route::post('/company/create', [CompanyController::class, 'post_create_company'])->name('company.create.post');
 
-    Route::get('/company/create', [CompanyController::class, 'create_company'])->name('company.create');
+    # rejoindre une company
+    Route::get('/company/join', [CompanyController::class, 'get_join_company'])->name('company.join.get');
+    Route::post('/company/join', [CompanyController::class, 'post_join_company'])->name('company.join.post');
 
-    Route::post('/company/add', [CompanyController::class, 'add_company'])->name('company.add');
+
 });
 
 
