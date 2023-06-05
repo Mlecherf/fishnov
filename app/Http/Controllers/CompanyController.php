@@ -19,12 +19,7 @@ class CompanyController extends Controller
     public function index()
     {
         $user = Auth::user();
-
-        $company = DB::table('company')
-                     ->join('users', 'users.id_company', '=', 'company.id_company')
-                     ->select('company.name_company', 'company.token_company')
-                     ->get()[0];
-
+        $company = Company::where('id_company', $user->id_company)->first();
         return view('company.index', compact('user', 'company'));
     }
 
