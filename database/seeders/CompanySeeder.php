@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Companies;
+use App\Models\Company;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
-class CompaniesSeeder extends Seeder
+class CompanySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +17,7 @@ class CompaniesSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        Companies::create([
+        Company::create([
             'name_company' => $faker->name,
             'name_admin_company' => $faker->name,
             'password_admin_company' => $faker->name

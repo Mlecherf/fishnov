@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\CompagniesController;
-use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\FishingController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 
@@ -21,29 +20,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function(){
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/fishings', [FishingController::class, 'index'])
-        ->name('fishing.index');
+    # FISHINGS 
+    Route::get('/fishings', [FishingController::class, 'index'])->name('fishing.index');
 
-    Route::get('/companies', [CompaniesController::class, 'index'])
-        ->name('companies.index');
 
-    Route::post('/companies/{id}', [CompaniesController::class, 'action'])
-        ->name('companies.action');
+    # COMPANY
+    Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
+
+    #Route::post('/company/{id}', [CompanyController::class, 'action']);
+    
+    # création company
+    Route::get('/company/create', [CompanyController::class, 'get_create_company'])->name('company.create.get');
+    Route::post('/company/create', [CompanyController::class, 'post_create_company'])->name('company.create.post');
+
+    # rejoindre une company
+    Route::get('/company/join', [CompanyController::class, 'get_join_company'])->name('company.join.get');
+    Route::post('/company/join', [CompanyController::class, 'post_join_company'])->name('company.join.post');
+
+
 });
 
 
-
-Route::get('/company', function () {
-    return view('register');
-});
-
-Route::post('/company/add  ', [CompanyController::class, 'create_company']);
 
 require __DIR__.'/auth.php';
