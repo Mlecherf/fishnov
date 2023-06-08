@@ -16,13 +16,13 @@ class CreateUser extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('first_name');
             $table->string('last_name');
             $table->foreignId('id_company')->nullable();
             $table->string('type');
             $table->string('registration_trawler')->nullable();
+            $table->boolean('is_admin')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

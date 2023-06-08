@@ -44,7 +44,7 @@
             <!-- Registration trawler -->
             <div class="mt-4" id="registration_trawler_div" hidden="true">
                 <x-label for="registration_trawler" :value="__('Registration Trawler')" />
-                <x-input id="registration_trawler_input" class="block mt-1 w-full" type="text" name="registration_trawler" :value="old('registration_trawler')" required />
+                <x-input id="registration_trawler_input" class="block mt-1 w-full" type="text" name="registration_trawler" :value="old('registration_trawler')"/>
             </div>
 
             <!-- Password -->

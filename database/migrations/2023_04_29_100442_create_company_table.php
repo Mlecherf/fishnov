@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTrawlerTable extends Migration
+class CreateCompanyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateTrawlerTable extends Migration
      */
     public function up()
     {
-        Schema::create('trawler', function (Blueprint $table) {
-            $table->id('id_trawler');
-            $table->foreignId('id_company');
-            $table->string('name_trawler');
-            $table->string('registration_trawler');
-            $table->string('password_trawler');
+        Schema::create('company', function (Blueprint $table) {
+            $table->id('id_company');
+            $table->string('name_company');
+            $table->foreignId('id_admin_company');
+            $table->string('token_company');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateTrawlerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trawler');
+        Schema::dropIfExists('company');
     }
 }
