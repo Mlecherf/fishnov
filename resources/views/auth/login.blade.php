@@ -8,6 +8,7 @@
         <style>
             body {
                 background-color: #ABBBCC;
+                overflow: hidden;
             }
             .sub-div {
                 margin: auto;
@@ -24,7 +25,7 @@
             .sub-div button {
                 background-color: #DBDEE2; /* Green */
                 color: white;
-                padding: 15px 128px;
+                padding: 0px 128px;
                 font-size: 39px;
                 color: #12507C;
                 text-decoration: none;
@@ -34,7 +35,6 @@
             .sub-div input {
                 background-color: #DBDEE2; /* Green */
                 color: white;
-                padding: 15px 128px;
                 font-size: 39px;
                 text-align: center;
                 color: #12507C;
@@ -126,7 +126,7 @@
     </head>
     <body class="antialiased">
         <div class="main-div">
-            <img src="{{ asset('img/fish.png') }}" alt="tag"  />
+            <a href="{{ route('home') }}" ><img src="{{ asset('img/fish.png') }}" alt="tag" /></a>
             <div class="text-div">
                 <h1>Login</h1>
             </div>
@@ -162,27 +162,25 @@
                     </div>
                 @endif
             </form>
-
-
             <svg class="editorial"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 24 150 28"
-                preserveAspectRatio="none">
-            <defs>
-            <path id="gentle-wave"
-            d="M-160 44c30 0 
-                58-18 88-18s
-                58 18 88 18 
-                58-18 88-18 
-                58 18 88 18
-                v44h-352z" />
-            </defs>
-            <g class="parallax">
-            <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2"/>
-            <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1"/>
-            <use xlink:href="#gentle-wave" x="50" y="6" fill="#2d55aa"/>  
-            </g>
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28"
+            preserveAspectRatio="none">
+                <defs>
+                <path id="gentle-wave"
+                d="M-160 44c30 0 
+                    58-18 88-18s
+                    58 18 88 18 
+                    58-18 88-18 
+                    58 18 88 18
+                    v44h-352z" />
+                </defs>
+                <g class="parallax">
+                <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2"/>
+                <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1"/>
+                <use xlink:href="#gentle-wave" x="50" y="6" fill="#2d55aa"/>  
+                </g>
             </svg>
                 
         </div>
