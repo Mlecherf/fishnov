@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
@@ -33,9 +34,12 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        error_log($token);
+        error_log($user->id);
+
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'Bearer',
+            'id' => $user->id,
         ]);
         
     }
@@ -61,11 +65,14 @@ class AuthController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);        
+        Auth::login($user);       
+        
+        $user_id = User::where('email', $request->email)->first();
+        $token = $user_id->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'Utilisateur créé' => $request->email
+            'access_token' => $token,
+            'id' => $user_id->id
         ]);
-
     }
 }
