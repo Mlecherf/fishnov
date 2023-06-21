@@ -30,7 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     */
 
-    Route::post('/user/update', [UserController::class, 'update_user'])->name('user.update');
+    Route::get('/user/{id}', [UserController::class, 'get_user'])->name('user.get');
+    Route::post('/user/update/{id}', [UserController::class, 'update_user'])->name('user.update');
 
     Route::get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates']);
 });

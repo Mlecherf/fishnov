@@ -10,10 +10,9 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function update_user(Request $request)
+    public function update_user($id, Request $request)
     {
         $request->validate([
-            'id' => ['required', 'integer'],
             'password' => ['confirmed', Rules\Password::defaults()],
             'first_name' => ['string', 'max:255'],
             'last_name' => ['string', 'max:255'],
@@ -44,4 +43,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function get_user ($id) {
+
+        $user = User::where('id', $id)->first();
+
+        if ($user) {
+            return response()->json(
+                $user
+            );
+        } else {
+            return response()->json(['error' => 'Utilisateur non trouvé.'], 404);
+        }
+    }
 }
