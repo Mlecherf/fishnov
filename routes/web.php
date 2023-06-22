@@ -21,9 +21,9 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/profile', function(){
+        return view('profile');
+    })->name('profile');
 
     # FISHINGS 
     Route::get('/fishings', [FishingController::class, 'index'])->name('fishing.index');
@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
     # rejoindre une company
     Route::get('/company/join', [CompanyController::class, 'get_join_company'])->name('company.join.get');
     Route::post('/company/join', [CompanyController::class, 'post_join_company'])->name('company.join.post');
+
+    #STATS
 
 
 });

@@ -152,7 +152,7 @@
                     <div class="sub-div">
                         <ul>
                             <li>
-                                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">
+                                <a href="{{ url('/profile') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">
                                     Dashboard
                                 </a>
                                 <span></span><span></span><span></span><span></span>
