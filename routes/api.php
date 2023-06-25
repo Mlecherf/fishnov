@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\CompanyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\FishingController;
@@ -32,6 +33,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/user/{id}', [UserController::class, 'get_user'])->name('user.get');
     Route::post('/user/update/{id}', [UserController::class, 'update_user'])->name('user.update');
+
+    Route::get('/company/{id}', [CompanyController::class, 'get_company_info'])->name('company.get');
+    Route::post('/company/join', [CompanyController::class, 'join_company'])->name('company.join');
 
     Route::get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates']);
 });
