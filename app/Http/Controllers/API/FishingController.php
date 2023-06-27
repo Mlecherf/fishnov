@@ -9,6 +9,12 @@ use App\Models\Fishing;
 
 class FishingController extends Controller
 {
+
+    public function add_fishing()
+    {
+        
+    }
+
     public function get_all_fishing_dates()
     {
         $user = Auth::user();
