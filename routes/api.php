@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/company/{id}', [CompanyController::class, 'get_company_info'])->name('company.get');
     Route::post('/company/join', [CompanyController::class, 'join_company'])->name('company.join');
 
-    Route::post('/fishing/add', [FishingController::class, 'add_fishing'])->name('fishing.add');
+    Route::post('/fishing/add/{id}', [FishingController::class, 'add_fishing'])->name('fishing.add');
 
     # JSP ? 
     Route::get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates']);
