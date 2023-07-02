@@ -52,9 +52,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-    
     Route::post('profile/update', [RegisteredUserController::class, 'update'])
                 ->name('profile.update');
+
+    Route::post('user/delete/{id}', [RegisteredUserController::class, 'delete'])
+                ->name('user.delete');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
