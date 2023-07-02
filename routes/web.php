@@ -5,6 +5,7 @@ use App\Http\Controllers\FishingController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\StatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,6 @@ Route::middleware('auth')->group(function () {
     # FISHINGS 
     Route::get('/fishings', [FishingController::class, 'index'])->name('fishing.index');
 
-
     # COMPANY
     Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
 
@@ -46,7 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/company/join', [CompanyController::class, 'post_join_company'])->name('company.join.post');
 
     #STATS
-
+    Route::get('/stats', [StatsController::class, 'index'])->name('stats.index');
+    Route::post('/stats/details/{id}', [StatsController::class, 'details'])->name('stats.details');
 
 });
 

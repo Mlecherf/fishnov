@@ -89,4 +89,23 @@ class RegisteredUserController extends Controller
         // return view
         return redirect(RouteServiceProvider::HOME);
     }
+
+    /**
+     * Handle an incoming registration request.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function delete($id)
+    {
+        $user = User::find($id);
+        $user->id_company = null;
+        if ($user->isDirty())
+        {
+            $user->save();
+        }
+
+        return redirect('/stats');
+    }
 }

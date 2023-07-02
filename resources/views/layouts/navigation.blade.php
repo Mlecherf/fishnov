@@ -123,7 +123,7 @@
                 </div>  
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link class="nav-link" :href="route('profile')" :active="request()->routeIs('profile')">
+                    <x-nav-link class="nav-link" :href="route('stats.index')" :active="request()->routeIs('stats.index')">
                         {{ __('Stats') }}
                     </x-nav-link>
                 </div> 
