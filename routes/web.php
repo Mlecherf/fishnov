@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/company/join', [CompanyController::class, 'get_join_company'])->name('company.join.get');
     Route::post('/company/join', [CompanyController::class, 'post_join_company'])->name('company.join.post');
 
+    # update une company
+    Route::post('/company/update/{id}', [CompanyController::class, 'post_update_company'])->name('company.update.post');
+
     #STATS
     Route::get('/stats', [StatsController::class, 'index'])->name('stats.index');
     Route::post('/stats/details/{id}', [StatsController::class, 'details'])->name('stats.details');

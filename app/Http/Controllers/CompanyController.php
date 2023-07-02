@@ -24,7 +24,6 @@ class CompanyController extends Controller
     }
 
     public function action(Request $request,$id){
-        dd($request);
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|integer'
         ]);
@@ -96,6 +95,25 @@ class CompanyController extends Controller
         };
 
         return redirect('/dashboard');
+
+    }
+
+    public function post_update_company (Request $request, $id) {
+
+        $request->validate([
+            'name_company' => 'required|string|max:255',
+        ]);
+
+        $company = Company::where('id_company',$id)->first();
+        $request->get('name_company') ? $company->name_company = $request->get('name_company') : '';
+       
+        if ($company->isDirty())
+        {
+            $company->save();
+        }
+
+
+        return redirect('/company');
 
     }
     
