@@ -20,8 +20,20 @@
                                     <a type="button" style="background-color: #DBDEE2" href="{{ route('company.join.get') }}">Join</a>
                                 </div>                              
                             @else
-                                <tr>{{$company->name_company}}</tr><br>
-                                <tr>{{$company->token_company}}</tr>
+                                <div>
+                                    <form method="post" action="{{ route('company.update.post',  $company->id_company) }}">
+                                        @csrf
+                                        <x-input id="name_company" type="text" name="name_company" value="{{$company->name_company}}" placeholder="{{$company->name_company}}"/>
+                                        
+                                        <x-button type="submit" style="margin-left: 10%;">Edit</x-button>
+                                    </form>
+                                    <br>
+                                </div>
+                                <div>
+                                    <tr>
+                                        {{$company->token_company}}
+                                    </tr>
+                                </div>
                             @endif
                             
                         </tr>                        
