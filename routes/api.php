@@ -32,8 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/fishing/add/{id}', [FishingController::class, 'add_fishing'])->name('fishing.add');
 
-    # JSP ? 
-    Route::get('/fishings/dates', [FishingController::class, 'get_all_fishing_dates']);
+    Route::get('/fishings/{id}', [FishingController::class, 'get_all_fishings']);
 });
 
 

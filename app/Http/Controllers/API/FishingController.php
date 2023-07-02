@@ -48,15 +48,30 @@ class FishingController extends Controller
         ]);
     }   
 
-    public function get_all_fishing_dates()
+    public function get_all_fishings($id)
     {
-        $user = Auth::user();
+        $allIdFishings = Fishing::where('id_user', $id)->get();
 
-        $allDate = Fishing::select('id_fishing', 'date')
-                            ->where('id_user', $user->id)
-                            ->get();
+        $allDetailedFishings = DetailedFishing::whereIn('id_fishing', $allIdFishings->pluck('id_fishing'))->get();
 
-        return response()->json($allDate);
+        $result = array();
+
+        foreach ($allIdFishings as $fishing) {
+            $idFishing = $fishing->id_fishing;
+
+            $fishingObj = array();
+            $fishingObj['date'] = $fishing->date;
+
+            foreach ($allDetailedFishings as $detailedFishing) {
+                if ($detailedFishing->id_fishing == $idFishing) {
+                    $fishingObj[$detailedFishing->type_fish] = $detailedFishing->quantity;
+                }
+            };
+
+            $result[] = $fishingObj;
+        }
+
+        return response()->json($result);
 
     }
 }

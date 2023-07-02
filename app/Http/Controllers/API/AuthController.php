@@ -25,7 +25,7 @@ class AuthController extends Controller
         
         $user = User::where('email', $request->email)->first();
 
-        if (Hash::check($request->password, $user->password)) {
+        if (Hash::check($request->password, $user->password) && $user->type == 'trawler') {
 
             $token = $user->createToken('auth_token')->plainTextToken;
 
