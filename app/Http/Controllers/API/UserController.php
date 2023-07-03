@@ -44,13 +44,11 @@ class UserController extends Controller
     }
 
     public function get_user ($id) {
-
+        
         $user = User::where('id', $id)->first();
 
         if ($user) {
-            return response()->json(
-                $user
-            );
+            return response()->json($user);
         } else {
             return response()->json(['error' => 'Utilisateur non trouvé.'], 404);
         }
