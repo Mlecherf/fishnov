@@ -48,7 +48,7 @@ class CompanyController extends Controller
 
         DB::transaction(function () use ($request) {
             $token = Str::random(10);
-            while (Company::where('token_company', $token)->exists()) {
+            while (Company::where(' token_company', $token)->exists()) {
                 $token = Str::random(10);
             }
         
