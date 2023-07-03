@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function () {
     # FISHINGS 
     Route::get('/fishings', [FishingController::class, 'index'])->name('fishing.index');
 
+    # création fishing 
+    Route::get('/fishings/create', [FishingController::class, 'get_create'])->name('fishing.create.get');
+    Route::post('/fishings/create/{id}', [FishingController::class, 'post_create'])->name('fishing.create.post');
+
     # COMPANY
     Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
 
