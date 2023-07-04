@@ -9,6 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" style="width: fit-content;">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 md:items-center" id="div_trawler"  >  
+                  <h1>Trawler table</h1>
                     <table id="trawler_table" aria-labelledby="dropdownMenuButton">
                         <tr>
                             <th onclick="sortTable(0)">Firstname</th>
@@ -41,7 +42,7 @@
                                         {{$count}}
                                     </td>
                                     <td>
-                                      @if(Auth::user()->is_admin == 1)
+                                      @if(Auth::user()->is_admin == 1 && $user->id != Auth::user()->id)
                                         <form class="grid grid-cols-12 gap-4 w-full" method="post" action="{{ route('user.delete', $user->id) }}">
                                           @csrf
                                             <button>Delete [❌]</button>
@@ -78,9 +79,6 @@
                           @foreach ($allManager as $user)
                               <tr>
                                   <td>
-                                      {{$user->id}}
-                                  </td>
-                                  <td>
                                       {{$user->first_name}}
                                   </td>
                                   <td>
@@ -91,13 +89,12 @@
                                   </td>
 
                                   <td>
-                                    @if(Auth::user()->is_admin == 1)
+                                    @if(Auth::user()->is_admin == 1 && $user->id != Auth::user()->id)
                                       <form class="grid grid-cols-12 gap-4 w-full" method="post" action="{{ route('user.delete', $user->id) }}">
                                         @csrf
                                           <button>Delete [❌]</button>
                                       </form>
                                     @endif
-                                    
                                   </td>
                               </tr>
                           @endforeach

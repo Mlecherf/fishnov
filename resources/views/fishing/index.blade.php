@@ -6,63 +6,42 @@
         </h2>
     </x-slot>
     
-
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <x-button onclick="window.location.href = '{{route('fishing.create.get')}}'">Add Fishing</x-button>
-          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 bg-white border-b border-gray-200 md:items-center">  
-                  <table id="fish_table">
-                  @foreach ($allDetails as $detail) 
-                    @foreach ($detail as $fish) 
-                      @if ($prevDate != $fish->date ?? 0)
-                        @php $prevDate = $fish->date ?? 0 @endphp
-                          <div class="py-12">
-                            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                              <x-button onclick="window.location.href = '{{route('fishing.create.get')}}'">Add Fishing</x-button>
-                                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                                  <div class="p-6 bg-white border-b border-gray-200 md:items-center">  
-                                      <table id="fish_table">
-                                          <tr>
-                                              <th onclick="sortTable(0)">Quantity</th>
-                                              <th onclick="sortTable(1)">Type</th>
-                                          </tr>
-                                            <h1>{{$fish->created_at}}</h1>
-                                            <tr>
-                                                <td>
-                                                    {{$fish->quantity}}
-                                                </td>
-                                                <td>
-                                                    {{$fish->type_fish}}
-                                                </td>
-                                            </tr>
-                                      </table>              
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                      @else 
-                            <tr>
-                                <th onclick="sortTable(0)">Quantity</th>
-                                <th onclick="sortTable(1)">Type</th>
-                            </tr>
-                              <h1>{{$fish->created_at}}</h1>
-                              <tr>
-                                  <td>
-                                      {{$fish->quantity}}
-                                  </td>
-                                  <td>
-                                      {{$fish->type_fish}}
-                                  </td>
-                              </tr>
-                            </table>              
-                          </div>
-                      </div>
-                  </div>
-        @endif
-      @endforeach
-    @endforeach
-
+      </div>
+    </div>
+    @foreach ($globalArray as $fishingArray) 
+      @php
+          $Date  = App\Models\Fishing::find($fishingArray[0]->id_fishing)->date;
+      @endphp
+      <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <x-button onclick="window.location.href = '{{route('fishing.create.get')}}'">Add Fishing</x-button>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+              <div class="p-6 bg-white border-b border-gray-200 md:items-center">  
+                <table id="fish_table">
+                  <h1 style="margin-left:45%; font-size:25px;">{{$Date}}</h1>
+                  @foreach ($fishingArray as $fish) 
+                    <tr>
+                      <th onclick="sortTable(0)">Quantity</th>
+                      <th onclick="sortTable(1)">Type</th>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{$fish->quantity}}
+                      </td>
+                      <td>
+                        {{$fish->type_fish}}
+                      </td>
+                    </tr>
+                  @endforeach
+              </table>     
+            </div>
+          </div>
+        </div>
+      </div>
+    @endforeach  
 </x-app-layout>
 
 <script>

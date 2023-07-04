@@ -48,10 +48,10 @@ class CompanyController extends Controller
 
         DB::transaction(function () use ($request) {
             $token = Str::random(10);
-            while (Company::where(' token_company', $token)->exists()) {
+            while (Company::where('token_company', $token)->exists()) {
                 $token = Str::random(10);
             }
-        
+            
             $company = Company::create([
                 'name_company' => $request->name_company,
                 'id_admin_company' => Auth::id(),
@@ -60,12 +60,12 @@ class CompanyController extends Controller
             $company->save();
         
             $user = Auth::user();
-            $user->id_company = $company->id;
+            $user->id_company = $company->id_company;
             $user->is_admin = true;
             $user->save();
         });
             
-        return redirect('/dashboard')->with('new company', 'Company enregistrée !');
+        return redirect('/profile')->with('new company', 'Company enregistrée !');
     }
 
     public function get_join_company () {
@@ -94,7 +94,7 @@ class CompanyController extends Controller
             return redirect()->route('company.join.get')->withErrors(['message' => 'Wrong token']);
         };
 
-        return redirect('/dashboard');
+        return redirect('/profile');
 
     }
 

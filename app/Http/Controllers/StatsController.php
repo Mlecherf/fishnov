@@ -20,7 +20,7 @@ class StatsController extends Controller
 
     public function details($id)
     {
-        $detailedFishings =Fishing::where('id_user', $id)->get();
+        $detailedFishings = Fishing::where('id_user', $id)->get();
         return view('stats.details', compact('detailedFishings'));
     }
 }

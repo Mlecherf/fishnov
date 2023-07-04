@@ -8,13 +8,13 @@
     </x-slot>
 
     @foreach ($detailedFishings as $fishing)
-        @php
-            $dFishings = App\Models\DetailedFishing::where('id_fishing',$fishing->id_fishing)->get();
-        @endphp
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" style="width: fit-content;">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <h1>{{$fishing->created_at}}</h1>
+                    @php
+                        $dFishings = App\Models\DetailedFishing::where('id_fishing', $fishing->id_fishing)->get();
+                    @endphp
                     <div class="p-6 bg-white border-b border-gray-200 md:items-center">  
                         <table id="fish_table">
                             <tr>

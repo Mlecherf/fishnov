@@ -20,4 +20,6 @@ class Fishing extends Model
         'date',
         'id_user'
     ];
+
+    protected $primaryKey = 'id_fishing';
 }

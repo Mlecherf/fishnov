@@ -12,19 +12,24 @@ class FishingController extends Controller
     {
         $user = Auth::user();
         $allFishings = Fishing::where('id_user', $user->id)->get();
-        $allDetails = [];
+        $globalArray = [];
         
         foreach($allFishings as $fishing)
         {
-            array_push($allDetails,DetailedFishing::where('id_fishing', $fishing->id_fishing)->get());
+            $temp_array = DetailedFishing::where('id_fishing', $fishing->id_fishing)->get();
+            if( count($temp_array)!= 0)
+            {
+                array_push($globalArray, $temp_array);
+            }
         };
-        return view('fishing.index', compact('allDetails'));
+
+        return view('fishing.index', compact('globalArray'));
     }
 
     public function get_create()
     {
         $user = Auth::user();
-        $fish = [
+        $fish = array(
             "Alligator Gar",
             "Amberjack",
             "Arapaima",
@@ -45,39 +50,56 @@ class FishingController extends Controller
             "Black Jewfish",
             "Black Rockfish",
             "Bluefish",
-        ];
+        );
         return view('fishing.create', compact('fish'));
     }
 
     public function post_create(Request $request, $id)
     {
-        
-        $request->validate([
-            'type' => 'required|string|max:255',
-            'date' => 'required|date',
-            'quantity' => 'required|integer'
-        ]);
-        
-        $fishing = Fishing::create([
-            'date' => $request->date,
-            'type' => $request->type,
-            'id_user' => $id,
-        ]);
 
-        $detailed_fishing = DetailedFishing::create([
-            'id_fishing' => $fishing->id,
-            'type_fish' => $request->type,
-            'quantity' => $request->quantity
-        ]);
+        $checkFishing= Fishing::where('date',$request->date[0])->get();
 
-        if ($fishing->isDirty())
+        if(count($checkFishing)!=0)
         {
-            $fishing->save();
-        }
+            for ($i = 0; $i < count($request->type); $i++)
+            {
+                $detailed_fishing = DetailedFishing::create([
+                    'id_fishing' => $checkFishing[0]->id_fishing,
+                    'type_fish' => $request->type[$i],
+                    'quantity' => $request->quantity[$i]
+                ]);
 
-        if ($detailed_fishing->isDirty())
-        {
-            $detailed_fishing->save();
+                if ($detailed_fishing->isDirty())
+                {
+                    $detailed_fishing->save();
+                }
+            }
+
+        } else {
+            $fishing = Fishing::create([
+                'date' => $request->date[0],
+                'id_user' => $id,
+            ]);
+            for ($i = 0; $i < count($request->type); $i++)
+            {
+                $detailed_fishing = DetailedFishing::create([
+                    'id_fishing' => $fishing->id_fishing,
+                    'type_fish' => $request->type[$i],
+                    'quantity' => $request->quantity[$i]
+                ]);
+
+                if ($detailed_fishing->isDirty())
+                {
+                    $detailed_fishing->save();
+                }
+            }
+
+            if ($fishing->isDirty())
+            {
+                $fishing->save();
+            }
+
+           
         }
 
         return redirect('/fishings');
