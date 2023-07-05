@@ -25,13 +25,14 @@ class FishingController extends Controller
         foreach($request->keys() as $key) {
             if ($key != 'date') {
                 $detailedFishing = DetailedFishing::create([
-                    'id_fishing' => $fishing->id,
+                    'id_fishing' => $fishing->id_fishing,
                     'type_fish' => $key,
                     'quantity' => (int)$request->$key
                 ]);
                 $detailedFishing->save();
             }
         };
+
 
         $user = User::where('id', $id)->first();
 
