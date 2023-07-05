@@ -74,18 +74,20 @@ class RegisteredUserController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'registration_trawler' => 'string|max:255',
-            'token_company' => 'string|max:255'
+            'token_company' => 'nullable|string|max:255'
         ]);
 
         $authUser = Auth::user();
         $user = User::find($authUser->id);
-        $company = Company::where('token_company',$request->token_company)->first();
+        if($request->token_company != null) {
+            $company = Company::where('token_company',$request->token_company)->first();
+            $company->id_company ? $user->id_company = $company->id_company : '';
+        }
 
         $request->get('first_name') ? $user->first_name = $request->get('first_name') : '';
         $request->get('last_name') ? $user->last_name = $request->get('last_name') : '';
         $request->get('email') ? $user->email = $request->get('email') : '';
         $request->get('registration_trawler') ? $user->registration_trawler = $request->get('registration_trawler') : '';
-        $company->id_company ? $user->id_company = $company->id_company : '';
         
         if ($user->isDirty())
         {

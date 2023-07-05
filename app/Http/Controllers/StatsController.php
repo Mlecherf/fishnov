@@ -13,8 +13,14 @@ class StatsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $allTrawler = User::where('id_company', $user->id_company)->where('type', 'trawler')->get();
-        $allManager = User::where('id_company', $user->id_company)->where('type', 'manager')->get();
+        $allManager = [];
+        $allTrawler = [];
+        if($user->id_company)
+        {
+            $allTrawler = User::where('id_company', $user->id_company)->where('type', 'trawler')->get();
+            $allManager = User::where('id_company', $user->id_company)->where('type', 'manager')->get();    
+        }
+
         return view('stats.index', compact('allTrawler', 'allManager'));
     }
 
