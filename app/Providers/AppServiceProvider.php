@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +25,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(UrlGenerator $url)
     {
+        Blade::if('manager', function () {
+            return auth()?->user()?->type === "manager";
+        });
+
+        Blade::if('trawler', function () {
+            return auth()?->user()?->type === "trawler";
+        });
         if(config('app.env') === 'production')
             {
                 $url->forceScheme('https');

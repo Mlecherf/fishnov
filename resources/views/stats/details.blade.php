@@ -1,47 +1,42 @@
+
+
 <x-app-layout>
-  @php $prevDate = null @endphp
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Fishings') }}
         </h2>
     </x-slot>
-    
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <x-button onclick="window.location.href = '{{route('fishing.create.get')}}'">Add Fishing</x-button>
-      </div>
-    </div>
-    @foreach ($globalArray as $fishingArray) 
-      @php
-          $Date  = App\Models\Fishing::find($fishingArray[0]->id_fishing)->date;
-      @endphp
-      <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <x-button onclick="window.location.href = '{{route('fishing.create.get')}}'">Add Fishing</x-button>
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-              <div class="p-6 bg-white border-b border-gray-200 md:items-center">  
-                <table id="fish_table">
-                  <h1 style="margin-left:45%; font-size:25px;">{{$Date}}</h1>
-                  @foreach ($fishingArray as $fish) 
-                    <tr>
-                      <th onclick="sortTable(0)">Quantity</th>
-                      <th onclick="sortTable(1)">Type</th>
-                    </tr>
-                    <tr>
-                      <td>
-                        {{$fish->quantity}}
-                      </td>
-                      <td>
-                        {{$fish->type_fish}}
-                      </td>
-                    </tr>
-                  @endforeach
-              </table>     
+
+    @foreach ($detailedFishings as $fishing)
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" style="width: fit-content;">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <h1>{{$fishing->created_at}}</h1>
+                    @php
+                        $dFishings = App\Models\DetailedFishing::where('id_fishing', $fishing->id_fishing)->get();
+                    @endphp
+                    <div class="p-6 bg-white border-b border-gray-200 md:items-center">  
+                        <table id="fish_table">
+                            <tr>
+                                <th onclick="sortTable(0)">Type</th>
+                                <th onclick="sortTable(1)">Quantity</th>
+                            </tr>
+                            @foreach ($dFishings as $dFishing)
+                                <tr>
+                                    <td>
+                                        {{$dFishing->type_fish}}
+                                    </td>
+                                    <td>
+                                        {{$dFishing->quantity}}
+                                    </td>
+                                </tr>
+                            @endforeach  
+                        </table> 
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    @endforeach  
+    @endforeach
 </x-app-layout>
 
 <script>
@@ -100,3 +95,19 @@
       }
     }
     </script>
+<style>
+  td {
+    padding-top:20px;
+    padding-bottom:20px;
+    padding-right:20px;   
+  }
+
+  td:first-child {
+    padding-left:20px;
+    padding-right:0;
+  }
+
+  th, td {
+    padding: 15px;
+  }
+</style>

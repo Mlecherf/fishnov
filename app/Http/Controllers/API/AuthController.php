@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
@@ -15,13 +16,6 @@ use App\Http\Requests\Auth\LoginRequest;
 class AuthController extends Controller
 {    
 
-    public function formLogin () {
-        return response()->json([
-            'email' => '...',
-            'password' => '...'
-        ]);
-    }
-
     public function login (LoginRequest $request) {
 
         $request->validate([
@@ -31,12 +25,21 @@ class AuthController extends Controller
         
         $user = User::where('email', $request->email)->first();
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        if (Hash::check($request->password, $user->password) && $user->type == 'trawler') {
 
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'access_token' => $token,
+                'id' => $user->id
+            ]);
+
+        } else {
+            return response()->json([
+                'access_token' => '',
+                'id' => 0
+            ]);
+        }
         
     }
 
@@ -61,11 +64,14 @@ class AuthController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);        
+        Auth::login($user);       
+        
+        $user_id = User::where('email', $request->email)->first();
+        $token = $user_id->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'Utilisateur créé' => $request->email
+            'access_token' => $token,
+            'id' => $user_id->id
         ]);
-
     }
 }

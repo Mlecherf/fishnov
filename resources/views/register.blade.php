@@ -1,6 +1,4 @@
 <div> 
-
-
     <div class="container mx-auto">
         <div class="w-full max-w-md mx-auto">
             <form method="POST" action="/company/add">

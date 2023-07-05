@@ -17,8 +17,9 @@ class Fishing extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
         'date',
         'id_user'
     ];
+
+    protected $primaryKey = 'id_fishing';
 }

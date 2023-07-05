@@ -21,4 +21,6 @@ class Company extends Model
         'id_admin_company',
         'token_company'
     ];
+
+    protected $primaryKey = 'id_company';
 }

@@ -24,7 +24,6 @@ class CompanyController extends Controller
     }
 
     public function action(Request $request,$id){
-        dd($request);
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|integer'
         ]);
@@ -52,7 +51,7 @@ class CompanyController extends Controller
             while (Company::where('token_company', $token)->exists()) {
                 $token = Str::random(10);
             }
-        
+            
             $company = Company::create([
                 'name_company' => $request->name_company,
                 'id_admin_company' => Auth::id(),
@@ -61,12 +60,12 @@ class CompanyController extends Controller
             $company->save();
         
             $user = Auth::user();
-            $user->id_company = $company->id;
+            $user->id_company = $company->id_company;
             $user->is_admin = true;
             $user->save();
         });
             
-        return redirect('/dashboard')->with('new company', 'Company enregistrée !');
+        return redirect('/profile')->with('new company', 'Company enregistrée !');
     }
 
     public function get_join_company () {
@@ -95,7 +94,26 @@ class CompanyController extends Controller
             return redirect()->route('company.join.get')->withErrors(['message' => 'Wrong token']);
         };
 
-        return redirect('/dashboard');
+        return redirect('/profile');
+
+    }
+
+    public function post_update_company (Request $request, $id) {
+
+        $request->validate([
+            'name_company' => 'required|string|max:255',
+        ]);
+
+        $company = Company::where('id_company',$id)->first();
+        $request->get('name_company') ? $company->name_company = $request->get('name_company') : '';
+       
+        if ($company->isDirty())
+        {
+            $company->save();
+        }
+
+
+        return redirect('/company');
 
     }
     

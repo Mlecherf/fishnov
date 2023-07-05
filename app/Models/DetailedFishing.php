@@ -17,7 +17,6 @@ class DetailedFishing extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id_detailed_fishing',
         'id_fishing',
         'type_fish',
         'quantity'

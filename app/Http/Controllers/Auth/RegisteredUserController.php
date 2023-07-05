@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -55,5 +57,61 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    /**
+     * Handle an incoming registration request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'registration_trawler' => 'string|max:255',
+            'token_company' => 'string|max:255'
+        ]);
+
+        $authUser = Auth::user();
+        $user = User::find($authUser->id);
+        $company = Company::where('token_company',$request->token_company)->first();
+
+        $request->get('first_name') ? $user->first_name = $request->get('first_name') : '';
+        $request->get('last_name') ? $user->last_name = $request->get('last_name') : '';
+        $request->get('email') ? $user->email = $request->get('email') : '';
+        $request->get('registration_trawler') ? $user->registration_trawler = $request->get('registration_trawler') : '';
+        $company->id_company ? $user->id_company = $company->id_company : '';
+        
+        if ($user->isDirty())
+        {
+            $user->save();
+        }
+
+        // return view
+        return redirect(RouteServiceProvider::HOME);
+    }
+
+    /**
+     * Handle an incoming registration request.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function delete($id)
+    {
+        $user = User::find($id);
+        $user->id_company = null;
+        if ($user->isDirty())
+        {
+            $user->save();
+        }
+
+        return redirect('/stats');
     }
 }
